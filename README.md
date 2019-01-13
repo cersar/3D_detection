@@ -17,7 +17,7 @@ Result on kitti:
 If you want to train, run:
 <pre><code>python3 train.py
 </code></pre>
-In this way, you can get your own weights file, or you can download from  https://1drv.ms/u/s!ApXgmQqTQot_hWWR4RDORU9jsxRP
+In this way, you can get your own weights file, or you can download from  https://1drv.ms/u/s!ApXgmQqTQot_hWWR4RDORU9jsxRP  
 Then run detection:
 <pre><code>python3 detection.py
 </code></pre>
