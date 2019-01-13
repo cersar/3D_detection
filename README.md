@@ -10,6 +10,8 @@ By now, there are still several problems to be solved:
 1、The orientation loss is not consist with what was discussed the paper.  
 2、The number of situations is 256 in this work, whereas it is 64 in the paper.  
 
+This is just a raw version, welcome to share your ideas to improve it!
+
 Result on kitti:  
 ![000031.png](https://raw.githubusercontent.com/cersar/picture/master/000031.png)
 ## Useage:
@@ -21,5 +23,4 @@ In this way, you can get your own weights file, or you can download from  https:
 Then run detection:
 <pre><code>python3 detection.py
 </code></pre>
-
 
