@@ -1,7 +1,7 @@
 # 3D_detection
 This work is inspired by image-to-3d-bbox(https://github.com/experiencor/image-to-3d-bbox), which is an an implementation of the paper "3D Bounding Box Estimation Using Deep Learning and Geometry" (https://arxiv.org/abs/1612.00496).
 
-Instead of using kitti's 3-D truth, i mainly make two supplements compared to image-to-3d-bbox(https://github.com/experiencor/image-to-3d-bbox):    
+Instead of using kitti's 3-D truth, i mainly make two supplements:    
 1、Compute 3-D box center by 2-D box and network's output  
 2、Compute theta_ray by 2-D box center  
 Besides, I make some changes to the code structure.
