@@ -13,7 +13,7 @@ By now, there are still several problems to be solved:
 This is just a raw version, welcome to share your ideas to improve it!
 
 Result on kitti:  
-![000031.png](https://raw.githubusercontent.com/cersar/picture/master/000031.png)
+![000031.png](https://raw.githubusercontent.com/cersar/3D_detection/master/output/000031.png)
 ## Useage:
 
 If you want to train, run:
