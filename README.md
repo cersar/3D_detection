@@ -8,19 +8,20 @@ Besides, I make some changes to the code structure.
 
 By now, there are still several problems to be solved, for example:  
 1、The number of situations is 256 in this work, whereas it is 64 in the paper.  
+2、When detecting, i use objects's truncated and occluded level in kitti's label file to decide whether to generate 3D box, whereas it is reasonable to generate these by the trained neural network.
 
 This is just a raw version, welcome to share your ideas to improve it!
 
 Result on kitti:  
-![0000254.png](https://raw.githubusercontent.com/cersar/3D_detection/master/output/000254.png)  
-![0000154.png](https://raw.githubusercontent.com/cersar/3D_detection/master/output/000154.png)  
+![0000254.jpg](https://github.com/cersar/3D_detection/blob/master/output/000254.jpg)  
+![0000154.jpg](https://github.com/cersar/3D_detection/blob/master/output/000154.jpg)  
 ## Useage:
 
-If you want to train, run:
+If you want to train, after fixing paths in the train.py, just run:
 <pre><code>python3 train.py
 </code></pre>
-In this way, you can get your own weights file, or you can download from  http://ddl.escience.cn/f/RRk0  
-Then run detection:
+In this way, you can get your own weights file, or you can download the pretrained file from  http://ddl.escience.cn/f/RRk0  
+In the detection time, after fixing paths in the detection.py, just run:
 <pre><code>python3 detection.py
 </code></pre>
 
