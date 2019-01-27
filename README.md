@@ -14,6 +14,7 @@ This is just a raw version, welcome to share your ideas to improve it!
 
 Result on kitti:  
 ![0000254.jpg](https://github.com/cersar/3D_detection/blob/master/output/000254.jpg)  
+![000249.jpg](https://github.com/cersar/3D_detection/blob/master/output/000249.jpg)  
 ![0000154.jpg](https://github.com/cersar/3D_detection/blob/master/output/000154.jpg)  
 ## Useage:
 
