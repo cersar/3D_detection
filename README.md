@@ -12,8 +12,8 @@ By now, there are still several problems to be solved, for example:
 This is just a raw version, welcome to share your ideas to improve it!
 
 Result on kitti:  
-![0000254.png](https://github.com/cersar/3D_detection/blob/master/output/000254.png)  
-![0000154.png](https://github.com/cersar/3D_detection/blob/master/output/000154.png)  
+![0000254.jpg](https://github.com/cersar/3D_detection/blob/master/output/000254.jpg)  
+![0000154.jpg](https://github.com/cersar/3D_detection/blob/master/output/000154.jpg)  
 ## Useage:
 
 If you want to train, run:
