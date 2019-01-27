@@ -17,11 +17,11 @@ Result on kitti:
 ![0000154.jpg](https://github.com/cersar/3D_detection/blob/master/output/000154.jpg)  
 ## Useage:
 
-If you want to train, run:
+If you want to train, after fixing paths in the train.py, just run:
 <pre><code>python3 train.py
 </code></pre>
 In this way, you can get your own weights file, or you can download from  http://ddl.escience.cn/f/RRk0  
-Then run detection:
+In the detection time, after fixing paths in the detection.py, just run:
 <pre><code>python3 detection.py
 </code></pre>
 
