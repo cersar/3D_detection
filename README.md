@@ -8,7 +8,7 @@ Besides, I make some changes to the code structure.
 
 By now, there are still several problems to be solved, for example:  
 1、The number of situations is 256 in this work, whereas it is 64 in the paper.  
-2、When detecting, i use objects's truncated and occluded level in kitti's label file to decide whether to generate 3D box, whereas it is reasonable to generate the truncated and occluded level by the trained neural network.
+2、When detecting, i use objects's truncated and occluded level in kitti's label file to decide whether to generate 3D box, whereas it is reasonable to generate these by the trained neural network.
 
 This is just a raw version, welcome to share your ideas to improve it!
 
