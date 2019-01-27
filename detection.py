@@ -36,6 +36,7 @@ for f in all_image:
     box2d_file = box2d_dir + f.replace('png', 'txt')
 
     img = cv2.imread(image_file)
+
     dect2D_data,box2d_reserved = get_dect2D_data(box2d_file,classes)
 
     for data in dect2D_data:
@@ -88,4 +89,4 @@ for f in all_image:
     cv2.imshow(f, img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-    # cv2.imwrite('F:/dataset/kitti/output/'+ f, img)
+    cv2.imwrite('output/'+ f.replace('png','jpg'), img)

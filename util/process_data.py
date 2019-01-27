@@ -16,6 +16,7 @@ def parse_annotation(label_dir, cls_to_ind):
             occluded = np.abs(float(line[2]))
             cls = line[0]
 
+            # add objects to train data only when their truncated level <0.3 and occluded level <= 1
             if cls in cls_to_ind.keys() and truncated < 0.3 and occluded <= 1:
                 theta_loc = -float(line[3]) + 3*np.pi / 2.
                 # Make sure object's theta_loc is in [0..2*pi].
@@ -186,6 +187,8 @@ def get_dect2D_data(box2d_file,classes):
         # Transform regressed dimension
         if cls in classes:
             box_2D = np.asarray(line[4:8],dtype=np.float)
+            # draw 3D box only when the object's truncated level <0.3 and occluded level <= 1,
+            # the rests are to be drawn their origin 2D box
             if truncated < 0.3 and occluded <= 1:
                 dect2D_data.append([cls, box_2D])
             else:

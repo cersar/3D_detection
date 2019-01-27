@@ -103,7 +103,6 @@ def draw_2D_box(image,points):
 
 
 def gen_3D_box(yaw,dims,cam_to_img,box_2D):
-    # yaw = -93.08241511578096/180*np.pi
     dims = dims.reshape((-1,1))
     box_2D = box_2D.reshape((-1,1))
     points3D = init_points3D(dims)

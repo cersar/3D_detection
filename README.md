@@ -6,20 +6,20 @@ Instead of using kitti's 3-D truth, i mainly make two supplements:
 2、Compute theta_ray by 2-D box center  
 Besides, I make some changes to the code structure.
 
-By now, there are still several problems to be solved:  
-1、The orientation loss is not consist with what was discussed the paper.  
-2、The number of situations is 256 in this work, whereas it is 64 in the paper.  
+By now, there are still several problems to be solved, for example:  
+1、The number of situations is 256 in this work, whereas it is 64 in the paper.  
 
 This is just a raw version, welcome to share your ideas to improve it!
 
 Result on kitti:  
-![000031.png](https://raw.githubusercontent.com/cersar/3D_detection/master/output/000031.png)
+![0000254.png](https://raw.githubusercontent.com/cersar/3D_detection/master/output/000254.png)  
+![0000154.png](https://raw.githubusercontent.com/cersar/3D_detection/master/output/000154.png)  
 ## Useage:
 
 If you want to train, run:
 <pre><code>python3 train.py
 </code></pre>
-In this way, you can get your own weights file, or you can download from  http://ddl.escience.cn/f/RL90  
+In this way, you can get your own weights file, or you can download from  http://ddl.escience.cn/f/RRk0  
 Then run detection:
 <pre><code>python3 detection.py
 </code></pre>
