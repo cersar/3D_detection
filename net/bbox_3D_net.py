@@ -3,6 +3,7 @@ from keras.layers.advanced_activations import LeakyReLU
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.layers.core import Flatten, Dropout, Reshape, Lambda
 from keras.models import Model
+from keras.applications.vgg16 import VGG16
 import tensorflow as tf
 
 
@@ -10,37 +11,14 @@ def l2_normalize(x):
     return tf.nn.l2_normalize(x, dim=2)
 
 
-def bbox_3D_net(input_shape=(224, 224, 3),bin_num=2):
-    inputs = Input(shape=input_shape)
-    # Block 1
-    x = Conv2D(64, (3, 3), activation='relu', padding='same', name='block1_conv1')(inputs)
-    x = Conv2D(64, (3, 3), activation='relu', padding='same', name='block1_conv2')(x)
-    x = MaxPooling2D((2, 2), strides=(2, 2), name='block1_pool')(x)
+def bbox_3D_net(input_shape=(224, 224, 3), vgg_weights=None, freeze_vgg=False, bin_num=6):
+    vgg16_model = VGG16(include_top=False, weights=vgg_weights, input_shape=input_shape)
 
-    # Block 2
-    x = Conv2D(128, (3, 3), activation='relu', padding='same', name='block2_conv1')(x)
-    x = Conv2D(128, (3, 3), activation='relu', padding='same', name='block2_conv2')(x)
-    x = MaxPooling2D((2, 2), strides=(2, 2), name='block2_pool')(x)
+    if freeze_vgg:
+        for layer in vgg16_model.layers:
+            layer.trainable = False
 
-    # Block 3
-    x = Conv2D(256, (3, 3), activation='relu', padding='same', name='block3_conv1')(x)
-    x = Conv2D(256, (3, 3), activation='relu', padding='same', name='block3_conv2')(x)
-    x = Conv2D(256, (3, 3), activation='relu', padding='same', name='block3_conv3')(x)
-    x = MaxPooling2D((2, 2), strides=(2, 2), name='block3_pool')(x)
-
-    # Block 4
-    x = Conv2D(512, (3, 3), activation='relu', padding='same', name='block4_conv1')(x)
-    x = Conv2D(512, (3, 3), activation='relu', padding='same', name='block4_conv2')(x)
-    x = Conv2D(512, (3, 3), activation='relu', padding='same', name='block4_conv3')(x)
-    x = MaxPooling2D((2, 2), strides=(2, 2), name='block4_pool')(x)
-
-    # Block 5
-    x = Conv2D(512, (3, 3), activation='relu', padding='same', name='block5_conv1')(x)
-    x = Conv2D(512, (3, 3), activation='relu', padding='same', name='block5_conv2')(x)
-    x = Conv2D(512, (3, 3), activation='relu', padding='same', name='block5_conv3')(x)
-    x = MaxPooling2D((2, 2), strides=(2, 2), name='block5_pool')(x)
-
-    x = Flatten()(x)
+    x = Flatten()(vgg16_model.output)
 
     dimension = Dense(512)(x)
     dimension = LeakyReLU(alpha=0.1)(dimension)
@@ -61,7 +39,7 @@ def bbox_3D_net(input_shape=(224, 224, 3),bin_num=2):
     confidence = Dropout(0.5)(confidence)
     confidence = Dense(bin_num, activation='softmax', name='confidence')(confidence)
 
-    model = Model(inputs, outputs=[dimension, orientation, confidence])
+    model = Model(vgg16_model.input, outputs=[dimension, orientation, confidence])
     return model
 
 

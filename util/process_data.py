@@ -14,21 +14,21 @@ def parse_annotation(label_dir, cls_to_ind):
             line = line.strip().split(' ')
             truncated = np.abs(float(line[1]))
             occluded = np.abs(float(line[2]))
+            cls = line[0]
 
-            if line[0] in cls_to_ind.keys() and truncated < 0.1 and occluded < 0.1:
-                new_alpha = float(line[3]) + np.pi / 2.
-                if new_alpha < 0:
-                    new_alpha = new_alpha + 2. * np.pi
-                new_alpha = new_alpha - int(new_alpha / (2. * np.pi)) * (2. * np.pi)
+            if cls in cls_to_ind.keys() and truncated < 0.3 and occluded <= 1:
+                theta_loc = -float(line[3]) + 3*np.pi / 2.
+                # Make sure object's theta_loc is in [0..2*pi].
+                theta_loc = theta_loc - np.floor(theta_loc / (2. * np.pi)) * (2. * np.pi)
 
-                obj = {'name': line[0],
+                obj = {'name': cls,
                        'image': image_file,
                        'xmin': int(float(line[4])),
                        'ymin': int(float(line[5])),
                        'xmax': int(float(line[6])),
                        'ymax': int(float(line[7])),
                        'dims': np.array([float(number) for number in line[8:11]]),
-                       'new_alpha': new_alpha
+                       'theta_loc': theta_loc
                        }
 
                 all_objs.append(obj)
@@ -52,7 +52,7 @@ def compute_anchors(angle, bin_num=2, overlap=0.1):
     return anchors
 
 
-def process_obj_attributes(objs, dims_avg, cls_to_ind, bin_num=2, overlap=0.1):
+def process_obj_attributes(objs, dims_avg, cls_to_ind, bin_num=6, overlap=0.1):
     for obj in objs:
         # Fix dimensions
         obj['dims'] = obj['dims'] - dims_avg[cls_to_ind[obj['name']]]
@@ -61,7 +61,7 @@ def process_obj_attributes(objs, dims_avg, cls_to_ind, bin_num=2, overlap=0.1):
         orientation = np.zeros((bin_num, 2))
         confidence = np.zeros(bin_num)
 
-        anchors = compute_anchors(obj['new_alpha'], bin_num, overlap)
+        anchors = compute_anchors(obj['theta_loc'], bin_num, overlap)
 
         for anchor in anchors:
             orientation[anchor[0]] = np.array([np.cos(anchor[1]), np.sin(anchor[1])])
@@ -76,7 +76,7 @@ def process_obj_attributes(objs, dims_avg, cls_to_ind, bin_num=2, overlap=0.1):
         orientation = np.zeros((bin_num, 2))
         confidence = np.zeros(bin_num)
 
-        anchors = compute_anchors(2. * np.pi - obj['new_alpha'])
+        anchors = compute_anchors(2. * np.pi - obj['theta_loc'], bin_num)
 
         for anchor in anchors:
             orientation[anchor[0]] = np.array([np.cos(anchor[1]), np.sin(anchor[1])])
@@ -175,14 +175,20 @@ def get_cam_data(calib_file):
 
 
 def get_dect2D_data(box2d_file,classes):
-    data = []
+    dect2D_data = []
+    box2d_reserved = []
     for line in open(box2d_file):
         line = line.strip().split(' ')
         cls = line[0]
-        # Transform regressed dimension
-        if line[0] not in classes:
-            continue
+        truncated = np.abs(float(line[1]))
+        occluded = np.abs(float(line[2]))
 
-        box_2D = line[4:8]
-        data.append([cls,box_2D])
-    return data
+        # Transform regressed dimension
+        if cls in classes:
+            box_2D = np.asarray(line[4:8],dtype=np.float)
+            if truncated < 0.3 and occluded <= 1:
+                dect2D_data.append([cls, box_2D])
+            else:
+                box2d_reserved.append([cls, box_2D])
+
+    return dect2D_data,box2d_reserved

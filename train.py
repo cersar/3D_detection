@@ -10,17 +10,17 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 # Construct the network
-model = bbox_3D_net((224,224,3))
+model = bbox_3D_net((224,224,3),bin_num=6,vgg_weights='imagenet')
 
-minimizer = Adam(lr=1e-4)
+minimizer = Adam(lr=1e-5)
 
 early_stop = EarlyStopping(monitor='val_loss', min_delta=0.001, patience=10, mode='min', verbose=1)
 checkpoint = ModelCheckpoint('weights.hdf5', monitor='val_loss', verbose=1, save_best_only=True, mode='min', period=1)
 tensorboard = TensorBoard(log_dir='../logs/', histogram_freq=0, write_graph=True, write_images=False)
 
 model.compile(optimizer=minimizer,#minimizer,
-              loss={'dimension': 'mean_squared_error', 'orientation': orientation_loss, 'confidence': 'mean_squared_error'},
-                  loss_weights={'dimension': 1., 'orientation': 1., 'confidence': 1.})
+              loss={'dimension': 'mean_squared_error', 'orientation': orientation_loss, 'confidence': 'categorical_crossentropy'},
+                  loss_weights={'dimension': 2., 'orientation': 1., 'confidence': 4.})
 
 
 label_dir = 'F:/dataset/kitti/training/label_2/'
@@ -39,15 +39,15 @@ train_num = int(0.9*objs_num)
 batch_size = 32
 np.random.shuffle(objs)
 
-train_gen = train_data_gen(objs[:train_num], image_dir, batch_size)
-valid_gen = train_data_gen(objs[train_num:], image_dir, batch_size)
+train_gen = train_data_gen(objs[:train_num], image_dir, batch_size, bin_num=6)
+valid_gen = train_data_gen(objs[train_num:], image_dir, batch_size, bin_num=6)
 
 train_epoch_num = int(np.ceil(train_num/batch_size))
 valid_epoch_num = int(np.ceil((objs_num - train_num)/batch_size))
 
 model.fit_generator(generator = train_gen,
                     steps_per_epoch = train_epoch_num,
-                    epochs = 3,
+                    epochs = 30,
                     verbose = 1,
                     validation_data = valid_gen,
                     validation_steps = valid_epoch_num,
