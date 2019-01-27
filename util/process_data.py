@@ -37,7 +37,7 @@ def parse_annotation(label_dir, cls_to_ind):
     return all_objs
 
 
-def compute_anchors(angle, bin_num=2, overlap=0.1):
+def compute_anchors(angle, bin_num=6, overlap=0.1):
     anchors = []
 
     wedge = 2. * np.pi / bin_num
@@ -120,7 +120,7 @@ def load_and_process_annotation_data(label_dir,dims_avg,cls_to_ind):
     return process_obj_attributes(objs, dims_avg, cls_to_ind)
 
 
-def train_data_gen(all_objs, image_dir, batch_size,bin_num=2):
+def train_data_gen(all_objs, image_dir, batch_size,bin_num=6):
 
     num_obj = len(all_objs)
 
