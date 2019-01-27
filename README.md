@@ -13,13 +13,13 @@ By now, there are still several problems to be solved:
 This is just a raw version, welcome to share your ideas to improve it!
 
 Result on kitti:  
-![000031.png](https://raw.githubusercontent.com/cersar/picture/master/000031.png)
+![000031.png](https://raw.githubusercontent.com/cersar/3D_detection/master/output/000031.png)
 ## Useage:
 
 If you want to train, run:
 <pre><code>python3 train.py
 </code></pre>
-In this way, you can get your own weights file, or you can download from  https://1drv.ms/u/s!ApXgmQqTQot_hWWR4RDORU9jsxRP  
+In this way, you can get your own weights file, or you can download from  http://ddl.escience.cn/f/RL90  
 Then run detection:
 <pre><code>python3 detection.py
 </code></pre>
