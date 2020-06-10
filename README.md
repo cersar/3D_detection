@@ -21,7 +21,7 @@ Result on kitti:
 If you want to train, after fixing paths in the train.py, just run:
 <pre><code>python3 train.py
 </code></pre>
-In this way, you can get your own weights file, or you can download the pretrained file from  http://ddl.escience.cn/f/RRk0  
+In this way, you can get your own weights file, or you can download the pretrained file from  https://pan.cstcloud.cn/web/share.html?hash=7dct49xER5w  
 In the detection time, after fixing paths in the detection.py, just run:
 <pre><code>python3 detection.py
 </code></pre>
